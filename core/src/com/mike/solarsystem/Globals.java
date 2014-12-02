@@ -5,6 +5,6 @@ package com.mike.solarsystem;
  */
 public class Globals {
 
-    public static double GRAVITATIONAL_CONSTANT = (6.67384*Math.pow(10,-2));
+    public static double GRAVITATIONAL_CONSTANT = (6.67384*Math.pow(10,-3));
 
 }

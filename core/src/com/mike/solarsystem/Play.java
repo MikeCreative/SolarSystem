@@ -2,12 +2,16 @@ package com.mike.solarsystem;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 import static com.mike.solarsystem.Planets.planetUpdate;
 
@@ -28,6 +32,8 @@ public class Play implements Screen {
     private CentralPlanet centralPlanet;
     private Planets planet;
 
+    private RayHandler rayHandler;
+
 
 
     @Override
@@ -37,8 +43,10 @@ public class Play implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         planetUpdate();
-
         camera.update();
+//        rayHandler.setCombinedMatrix(camera.combined);
+        rayHandler.updateAndRender();
+
         debugRenderer.render(world, camera.combined);
 
         world.step(timestep, 8, 3);
@@ -58,10 +66,14 @@ public class Play implements Screen {
         debugRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
 
-
         centralPlanet = new CentralPlanet(world, 0, 0, 20);
+        planet = new Planets(world, 100, 0, 3);
 
-        planet = new Planets(world, 100, 100, 10);
+        rayHandler = new RayHandler(world);
+        PointLight pointLight = new PointLight(rayHandler, 10, new Color(1,1,1,1), 1, 10, 10);
+        pointLight.attachToBody(CentralPlanet.getBody(), 0, 0);
+
+
 
 
     }
@@ -86,5 +98,6 @@ public class Play implements Screen {
         world.dispose();
         debugRenderer.dispose();
         batch.dispose();
+        rayHandler.dispose();
     }
 }

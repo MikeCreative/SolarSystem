@@ -8,7 +8,7 @@ public class GravitationalForce {
     public static float ComputeGravity(float mass1, float mass2, float distance){
         float forceGravity;
 
-        forceGravity = (float) (Globals.GRAVITATIONAL_CONSTANT*mass1*mass2/(distance*distance));
+        forceGravity = (float) ((Globals.GRAVITATIONAL_CONSTANT*mass1*mass2)/(distance*distance));
 
         return forceGravity;
     }

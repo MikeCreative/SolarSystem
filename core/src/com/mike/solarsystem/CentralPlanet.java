@@ -50,4 +50,8 @@ public class CentralPlanet {
     public static float getPositionY() {
         return planet.getPosition().y;
     }
+
+    public static Body getBody() {
+        return planet;
+    }
 }
