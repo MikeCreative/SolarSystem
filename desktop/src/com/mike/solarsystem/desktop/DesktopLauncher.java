@@ -2,6 +2,7 @@ package com.mike.solarsystem.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.mike.solarsystem.SolarSystem;
 
 public class DesktopLauncher {

@@ -5,6 +5,9 @@ package com.mike.solarsystem;
  */
 public class Globals {
 
-    public static double GRAVITATIONAL_CONSTANT = (6.67384*Math.pow(10,-3));
+    public static final int MAX_PLANETS = 20;
+    public static final double GRAVITATIONAL_CONSTANT = (6.67384*Math.pow(10,-3));
+
+    public static int NUMBER_OF_PLANETS = 0;
 
 }
