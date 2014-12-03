@@ -2,14 +2,12 @@ package com.mike.solarsystem;
 
 /**
  * Created by Mike on 3/12/2014.
+ *
  */
 public class Physics {
 
 
     public static void planetUpdate() {
-
-
-
 
         for (int i = 0; i < Globals.NUMBER_OF_PLANETS; i++) {
 
@@ -31,18 +29,25 @@ public class Physics {
                     }
 
                     float gravity = GravitationalForce.ComputeGravity(Planets.getPlanet(i).getMass(), Planets.getPlanet(j).getMass(), (float) Math.sqrt(distance));
-
                     xForce += (float) (gravity * Math.cos(rotation));
                     yForce += (float) (gravity * Math.sin(rotation));
+
+                    System.out.println("Force x " + xForce + " Force y " + yForce);
+
+
 //                    System.out.println("Distance" + distance);
 
                 }
 //                float velocity = GravitationalForce.tangentalVelocity(Planets.getPlanet(i).getMass(), Planets.getPlanet(j).getMass(), (float) Math.sqrt(distance));
 //                float xVelocity = (float) (velocity * Math.cos(rotation + Math.PI / 2));
 //                float yVelocity = (float) (velocity * Math.sin(rotation + Math.PI / 2));
+
+
 //
 //                Planets.getPlanet(i).setLinearVelocity(xVelocity, yVelocity);
                 Planets.getPlanet(i).applyForceToCenter(-xForce / 2, -yForce / 2, true);
+//                System.out.println("Velicty " + Planets.getPlanet(i).getLinearVelocity());
+
             }
 
 
