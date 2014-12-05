@@ -44,7 +44,9 @@ public class Play implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
 
+
         planetUpdate();
+        OrbitalInformation.trajectory();
         camera.update();
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
@@ -57,8 +59,8 @@ public class Play implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = Gdx.graphics.getWidth();
-        camera.viewportHeight = Gdx.graphics.getHeight();
+        camera.viewportWidth = Gdx.graphics.getWidth()*2;
+        camera.viewportHeight = Gdx.graphics.getHeight()*2;
     }
 
     @Override
@@ -72,17 +74,20 @@ public class Play implements Screen {
 
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
-        planet = new Planets(world, 0, 0, 100);
-        for (int i = 1; i < 4; i++){
+        planet = new Planets(world, 0, 0, 20);
+        for (int i = 1; i < 6; i++){
             planet = new Planets(world, 150, 0, 2);
         }
+
+        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
+//        Planets.Moon(world, -10, 0, 0.5f, Planets.getPlanet(3));
+
+
+        Gdx.input.setInputProcessor(planet);
 
 //        rayHandler = new RayHandler(world);
 //        PointLight pointLight = new PointLight(rayHandler, 10, new Color(1,1,1,1), 1, 10, 10);
 //        pointLight.attachToBody(CentralPlanet.getBody(), 0, 0);
-
-
-
 
     }
 
