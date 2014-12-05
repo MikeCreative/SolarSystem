@@ -74,9 +74,15 @@ public class Play implements Screen {
 
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
+<<<<<<< HEAD
         planet = new Planets(world, 0, 0, 20);
         for (int i = 1; i < 6; i++){
             planet = new Planets(world, 150, 0, 2);
+=======
+        planet = new Planets(world, 0, 0, 5);
+        for (int i = 1; i < 5; i++){
+            planet = new Planets(world, 200, 0, 0.5f);
+>>>>>>> origin/master
         }
 
         Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
