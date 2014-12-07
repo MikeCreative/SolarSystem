@@ -22,7 +22,7 @@ public class Planets extends InputAdapter {
     private static Body[] planet = new Body[MAX_PLANETS];
 
 
-    public Planets(World world, float x, float y, float radius) {
+    public Planets(World world, float x, float y, float radius, float density) {
         current_world = world;
 
         BodyDef bodyDef = new BodyDef();
@@ -34,19 +34,19 @@ public class Planets extends InputAdapter {
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = circleShape;
-        fixDef.density = 1000;
+        fixDef.density = density;
         fixDef.restitution = .1f;
         fixDef.friction = .5f;
 
-<<<<<<< HEAD
-        bodyDef.position.set(x + NUMBER_OF_PLANETS*100, 0);
+        bodyDef.position.set(x + NUMBER_OF_PLANETS, 0);
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
         Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
         planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
         System.out.println("Planet Created: " + NUMBER_OF_PLANETS);
+        System.out.println("Mass" + planet[NUMBER_OF_PLANETS].getMass());
 
         if(NUMBER_OF_PLANETS != 0) {
-            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS * 100);
+            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS);
             System.out.println("Velocity " + velocity);
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
         }
@@ -70,28 +70,18 @@ public class Planets extends InputAdapter {
         fixDef.friction = .5f;
 
         bodyDef.position.set(MotherPlanet.getPosition().x + x, MotherPlanet.getPosition().y + 0);
-=======
-        bodyDef.position.set(x + NUMBER_OF_PLANETS*200, 0);
->>>>>>> origin/master
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
         Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
         planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
         System.out.println("Planet Created: " + NUMBER_OF_PLANETS);
 
         if(NUMBER_OF_PLANETS != 0) {
-<<<<<<< HEAD
-            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x) + MotherPlanet.getLinearVelocity().y;
+            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y);
             System.out.println("Velocity " + velocity);
-=======
-            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), (float) x + NUMBER_OF_PLANETS * 200);
-            System.out.println(velocity);
->>>>>>> origin/master
+
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
         }
-
-
         NUMBER_OF_PLANETS++;    // New Planet
-
     }
 
     @Override
@@ -115,7 +105,7 @@ public class Planets extends InputAdapter {
             default:
                 return false;
         }
-        System.out.println(Globals.TIME_MULTIPLIER);
+//        System.out.println(Globals.TIME_MULTIPLIER + " " + Globals.GRAVITATIONAL_CONSTANT);
         return true;
     }
 

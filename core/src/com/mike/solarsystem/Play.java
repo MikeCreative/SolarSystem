@@ -59,8 +59,8 @@ public class Play implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = Gdx.graphics.getWidth()*2;
-        camera.viewportHeight = Gdx.graphics.getHeight()*2;
+        camera.viewportWidth = Gdx.graphics.getWidth()*3;
+        camera.viewportHeight = Gdx.graphics.getHeight()*3;
     }
 
     @Override
@@ -74,18 +74,20 @@ public class Play implements Screen {
 
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
-<<<<<<< HEAD
-        planet = new Planets(world, 0, 0, 20);
-        for (int i = 1; i < 6; i++){
-            planet = new Planets(world, 150, 0, 2);
-=======
-        planet = new Planets(world, 0, 0, 5);
-        for (int i = 1; i < 5; i++){
-            planet = new Planets(world, 200, 0, 0.5f);
->>>>>>> origin/master
-        }
+        // Central Planet - SUN
+        planet = new Planets(world, 0, 0, 69.634f, 1.408f);
 
-        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
+        // Mercury
+        planet = new Planets(world, 570, 0, 0.25f, 5.427f);
+        // Venus
+        planet = new Planets(world, 1080, 0, 0.605f, 5.243f);
+        // Earth
+        planet = new Planets(world, 1500, 0, 0.637f, 5.514f);
+        // Mars
+        planet = new Planets(world, 2280, 0, 0.34f, 3.93f);
+//        planet = new Planets(world, 350, 0, 4);
+
+//        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
 //        Planets.Moon(world, -10, 0, 0.5f, Planets.getPlanet(3));
 
 

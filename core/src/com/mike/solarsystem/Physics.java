@@ -34,24 +34,9 @@ public class Physics {
                     xForce += (float) (gravity * Math.cos(rotation));
                     yForce += (float) (gravity * Math.sin(rotation));
 
-                    System.out.println("Force x " + xForce + " Force y " + yForce);
-
-
+//                    System.out.println("Force x " + xForce + " Force y " + yForce);
 //                    System.out.println("Distance" + distance);
                 }
-<<<<<<< HEAD
-=======
-//                float velocity = GravitationalForce.tangentalVelocity(Planets.getPlanet(i).getMass(), Planets.getPlanet(j).getMass(), (float) Math.sqrt(distance));
-//                float xVelocity = (float) (velocity * Math.cos(rotation + Math.PI / 2));
-//                float yVelocity = (float) (velocity * Math.sin(rotation + Math.PI / 2));
-
-
-//
-//                Planets.getPlanet(i).setLinearVelocity(xVelocity, yVelocity);
-                Planets.getPlanet(i).applyForceToCenter(-xForce / 2, -yForce / 2, true);
-//                System.out.println("Velicty " + Planets.getPlanet(i).getLinearVelocity());
-
->>>>>>> origin/master
             }
 //                Planets.getPlanet(i).setLinearVelocity(xVelocity, yVelocity);
 //            System.out.println("Force" + xForce + " " + yForce);

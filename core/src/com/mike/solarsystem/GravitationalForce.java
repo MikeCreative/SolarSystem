@@ -16,7 +16,7 @@ public class GravitationalForce {
     public static float tangentalVelocity(float mass1, float mass2, float distance){
         float velocity;
 
-        velocity = (float) (Globals.GRAVITATIONAL_CONSTANT*(mass1 + mass2)/distance);
+        velocity = (float) (Globals.GRAVITATIONAL_CONSTANT*(mass1 + mass2)/(distance));
 
         return (float) Math.sqrt(velocity);
     }
