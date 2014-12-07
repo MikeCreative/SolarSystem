@@ -22,7 +22,7 @@ public class Planets extends InputAdapter {
     private static Body[] planet = new Body[MAX_PLANETS];
 
 
-    public Planets(World world, float x, float y, float radius, float density) {
+    public Planets(World world, float x, float y, float radius, float density, String string) {
         current_world = world;
 
         BodyDef bodyDef = new BodyDef();
@@ -44,6 +44,7 @@ public class Planets extends InputAdapter {
         planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
         System.out.println("Planet Created: " + NUMBER_OF_PLANETS);
         System.out.println("Mass" + planet[NUMBER_OF_PLANETS].getMass());
+        planet[NUMBER_OF_PLANETS].setUserData(string);
 
         if(NUMBER_OF_PLANETS != 0) {
             float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS);

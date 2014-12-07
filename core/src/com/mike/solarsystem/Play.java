@@ -1,12 +1,14 @@
 package com.mike.solarsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -23,9 +25,9 @@ import static com.mike.solarsystem.Physics.planetUpdate;
 public class Play implements Screen {
 
     // World Variables
-    private World world;
+    private static World world;
     private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera camera;
+    private static OrthographicCamera camera;
 
     private SpriteBatch batch;
 
@@ -47,7 +49,8 @@ public class Play implements Screen {
 
         planetUpdate();
         OrbitalInformation.trajectory();
-        camera.update();
+        CameraHandler.CameraHandler(camera);
+
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
 //        rayHandler.updateAndRender();
@@ -59,8 +62,8 @@ public class Play implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = Gdx.graphics.getWidth()*3;
-        camera.viewportHeight = Gdx.graphics.getHeight()*3;
+        camera.viewportWidth = Gdx.graphics.getWidth()*30;
+        camera.viewportHeight = Gdx.graphics.getHeight()*30;
     }
 
     @Override
@@ -75,23 +78,28 @@ public class Play implements Screen {
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
         // Central Planet - SUN
-        planet = new Planets(world, 0, 0, 69.634f, 1.408f);
+        planet = new Planets(world, 0, 0, 696.34f, 1.408f, "SUN");
 
         // Mercury
-        planet = new Planets(world, 570, 0, 0.25f, 5.427f);
+        planet = new Planets(world, 5700, 0, 2.5f, 5.427f, "MERCURY");
         // Venus
-        planet = new Planets(world, 1080, 0, 0.605f, 5.243f);
+        planet = new Planets(world, 10800, 0, 6.05f, 5.243f, "VENUS");
         // Earth
-        planet = new Planets(world, 1500, 0, 0.637f, 5.514f);
+        planet = new Planets(world, 15000, 0, 6.37f, 5.514f, "EARTH");
         // Mars
-        planet = new Planets(world, 2280, 0, 0.34f, 3.93f);
+        planet = new Planets(world, 22800, 0, 3.4f, 3.93f, "MARS");
 //        planet = new Planets(world, 350, 0, 4);
 
 //        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
 //        Planets.Moon(world, -10, 0, 0.5f, Planets.getPlanet(3));
 
+        TouchGestureDetection touchGestureDetection = new TouchGestureDetection();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
-        Gdx.input.setInputProcessor(planet);
+        inputMultiplexer.addProcessor(planet);
+        inputMultiplexer.addProcessor(new GestureDetector(touchGestureDetection));
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
 
 //        rayHandler = new RayHandler(world);
 //        PointLight pointLight = new PointLight(rayHandler, 10, new Color(1,1,1,1), 1, 10, 10);
@@ -120,5 +128,13 @@ public class Play implements Screen {
         debugRenderer.dispose();
         batch.dispose();
 //        rayHandler.dispose();
+    }
+
+    public static OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public static World getWorld() {
+        return world;
     }
 }
