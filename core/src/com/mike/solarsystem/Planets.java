@@ -116,6 +116,18 @@ public class Planets extends InputAdapter {
         return true;
     }
 
+    @Override
+    public boolean scrolled(int amount) {
+        if ((amount > 0 ) && (Globals.CAMERA_ZOOM < Globals.MAX_ZOOM)){
+            Globals.CAMERA_ZOOM += 0.01f;
+        }
+        if ((amount < 0 ) && (Globals.CAMERA_ZOOM > Globals.MIN_ZOOM)){
+            Globals.CAMERA_ZOOM -= 0.01f;
+        }
+
+        return true;
+    }
+
     public static Body getPlanet(int i) {
         return planet[i];
     }

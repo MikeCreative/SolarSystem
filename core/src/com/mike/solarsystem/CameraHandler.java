@@ -1,5 +1,6 @@
 package com.mike.solarsystem;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 /**
@@ -7,8 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
  */
 public class CameraHandler {
 
-    private static float cameraX, cameraY, currentX, currentY;
+    // Camera Move
+    private static float cameraX, cameraY, currentX, currentY, differenceX, differenceY;
+    // Camera Zoom
+    private static float currentZoom, desiredZoom, Zoomdifference;
 
+
+    // TODO: Play with the values
     public static void CameraHandler(OrthographicCamera camera){
 
         camera.zoom = Globals.CAMERA_ZOOM;
@@ -17,39 +23,53 @@ public class CameraHandler {
 
         if (Globals.TRACKING_STATE){    // Camera is tracking planet
 
-            currentX = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x;
-            currentY = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y;
-//            System.out.println("Camera X"  + cameraX + " Currentx " + currentX);
-//            if (cameraX != currentX){
-//                //Must animate Camera
-//                cameraX += (cameraX - currentX*0.001f);
-//                camera.position.x = cameraX;
-//            } else {
-//                Globals.CAMERA_X = currentX;
-//                camera.position.x = Globals.CAMERA_X;
-//            }
-//
-//            if (cameraY != currentY){
-//                //Must animate Camera
-//                cameraY += (cameraY - currentY*0.001f);
-//                camera.position.y = cameraY;
-//            } else {
-//                Globals.CAMERA_Y = currentY;
-//                camera.position.y = Globals.CAMERA_Y;
-//            }
-            Globals.CAMERA_X = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x;
-            Globals.CAMERA_Y = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y;
+            if (Globals.CAMERA_MOVING) {
+                //ZOOM
+                currentZoom = Globals.CAMERA_ZOOM;
+                desiredZoom = Globals.PLANETZOOMLEVEL[Globals.TRACKING_PLANET];
+                Zoomdifference = currentZoom - desiredZoom;
 
-            //TODO: Animate Camera Movement
+                // ZOOM
+                currentX = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x;
+                currentY = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y;
 
-            // Check to see if camera is currently on point
+                differenceX = cameraX - currentX;
+                differenceY = cameraY - currentY;
+                Globals.CAMERA_ZOOM = currentZoom - Zoomdifference/10;
 
+                if ((Math.abs(differenceX) < 1) && (Math.abs(differenceY) < 2) && (Math.abs(Zoomdifference) < 0.1) ){
+                    System.out.println("Camera Move Successful");
+                    Globals.CAMERA_MOVING = false;
+                }
+                System.out.println("Distance Camera Planet " + differenceX + " " + differenceY);
+                Globals.CAMERA_X = cameraX - differenceX/10;
+                Globals.CAMERA_Y = cameraY - differenceY/10;
 
-
-            camera.position.set(Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x, Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y, 0);
-            // Keep updating camera positions incase user moves off planet
-
+            } else {
+             Globals.CAMERA_X = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x;
+                Globals.CAMERA_Y = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y;
+            }
+            camera.position.set(Globals.CAMERA_X, Globals.CAMERA_Y, 0);
         } else {
+
+            // If flinging
+            if (Globals.FLING){
+                Globals.VelocityX *= 0.98f;
+                Globals.VelocityY *= 0.98f;
+
+                Globals.CAMERA_X += -Globals.VelocityX * Gdx.graphics.getDeltaTime();
+                Globals.CAMERA_Y += Globals.VelocityY * Gdx.graphics.getDeltaTime();
+
+                camera.position.set(Globals.CAMERA_X, Globals.CAMERA_Y, 0);
+                if (Math.abs(Globals.VelocityX) < 0.01f) {
+                    Globals.FLING = false;
+                    Globals.VelocityX = 0;
+                }
+                if (Math.abs(Globals.VelocityY) < 0.01f) {
+                    Globals.FLING = false;
+                    Globals.VelocityY = 0;
+                }
+            }
             camera.position.set(Globals.CAMERA_X, Globals.CAMERA_Y, 0);
         }
 

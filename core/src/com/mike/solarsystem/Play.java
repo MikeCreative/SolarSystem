@@ -49,7 +49,13 @@ public class Play implements Screen {
 
         planetUpdate();
         OrbitalInformation.trajectory();
+
+        // UI Elements
+        UserInterface.updateUI();
+
         CameraHandler.CameraHandler(camera);
+
+
 
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
@@ -93,10 +99,15 @@ public class Play implements Screen {
 //        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
 //        Planets.Moon(world, -10, 0, 0.5f, Planets.getPlanet(3));
 
+        // UI Elements
+        UserInterface.CreateInterface();
+
+        // Touch Detection
         TouchGestureDetection touchGestureDetection = new TouchGestureDetection();
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
         inputMultiplexer.addProcessor(planet);
+        inputMultiplexer.addProcessor(UserInterface.getStage());
         inputMultiplexer.addProcessor(new GestureDetector(touchGestureDetection));
 
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -104,6 +115,7 @@ public class Play implements Screen {
 //        rayHandler = new RayHandler(world);
 //        PointLight pointLight = new PointLight(rayHandler, 10, new Color(1,1,1,1), 1, 10, 10);
 //        pointLight.attachToBody(CentralPlanet.getBody(), 0, 0);
+
 
     }
 

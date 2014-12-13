@@ -20,12 +20,18 @@ public class Globals {
     public static float CAMERA_ZOOM = 1f;
     public static float MAX_ZOOM = 2;
     public static float MIN_ZOOM = 0.001f;
+    public static float CAMERA_PAN = 20f;
 
     public static float CAMERA_X = 0;
     public static float CAMERA_Y = 0;
 
     public static int TRACKING_PLANET = 0;
-    public static boolean TRACKING_STATE = true;  //Camera is tracking a planet. Will e false if user manually moves the camera
+    public static boolean TRACKING_STATE = true;    //Camera is tracking a planet. Will e false if user manually moves the camera
+    public static boolean CAMERA_MOVING = false;    //New planet has been selected, move Camera to the new planet
+    public static float[] PLANETZOOMLEVEL = {0.3f, 0.005f, 0.01f, 0.01f, 0.01f, 0f};
 
-
+    // Fling
+    public static boolean FLING = false;
+    public static float VelocityX;
+    public static float VelocityY;
 }
