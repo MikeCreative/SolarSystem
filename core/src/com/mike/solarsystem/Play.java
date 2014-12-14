@@ -36,6 +36,7 @@ public class Play implements Screen {
     private CentralPlanet centralPlanet;
     private Planets planet;
     FPSLogger fpsLogger;
+    private int mode = Globals.SIMULATION;
 //    private RayHandler rayHandler;
 
 
@@ -49,6 +50,12 @@ public class Play implements Screen {
 
         planetUpdate();
         OrbitalInformation.trajectory();
+
+        // Check Mode
+        if (Globals.MODE != mode){
+            mode = Globals.MODE;
+            changePlanetaryMode.changeMode();
+        }
 
         // UI Elements
         UserInterface.updateUI();
@@ -84,16 +91,15 @@ public class Play implements Screen {
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
         // Central Planet - SUN
-        planet = new Planets(world, 0, 0, 696.34f, 1.408f, "SUN");
-
+        planet = new Planets(world, 0, 0, Globals.planetRadiusSimulation[0], Globals.planetDensitiesSimulation[0], "SUN");
         // Mercury
-        planet = new Planets(world, 5700, 0, 2.5f, 5.427f, "MERCURY");
+        planet = new Planets(world, 5700, 0, Globals.planetRadiusSimulation[1], Globals.planetDensitiesSimulation[1], "MERCURY");
         // Venus
-        planet = new Planets(world, 10800, 0, 6.05f, 5.243f, "VENUS");
+        planet = new Planets(world, 10800, 0, Globals.planetRadiusSimulation[2], Globals.planetDensitiesSimulation[2], "VENUS");
         // Earth
-        planet = new Planets(world, 15000, 0, 6.37f, 5.514f, "EARTH");
+        planet = new Planets(world, 15000, 0, Globals.planetRadiusSimulation[3], Globals.planetDensitiesSimulation[3], "EARTH");
         // Mars
-        planet = new Planets(world, 22800, 0, 3.4f, 3.93f, "MARS");
+        planet = new Planets(world, 22800, 0, Globals.planetRadiusSimulation[4], Globals.planetDensitiesSimulation[4], "MARS");
 //        planet = new Planets(world, 350, 0, 4);
 
 //        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));

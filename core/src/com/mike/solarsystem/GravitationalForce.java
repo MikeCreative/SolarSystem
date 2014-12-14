@@ -21,4 +21,12 @@ public class GravitationalForce {
         return (float) Math.sqrt(velocity);
     }
 
+    public static float getNewDensity(float mass, float radius){
+        float density;
+
+        density = (float) (mass/(Math.PI * radius * radius));
+
+        return density;
+    }
+
 }

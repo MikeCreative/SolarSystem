@@ -2,6 +2,7 @@ package com.mike.solarsystem;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,6 +21,8 @@ public class Planets extends InputAdapter {
 
     World current_world;
     private static Body[] planet = new Body[MAX_PLANETS];
+    private static Fixture[] planetFixtures = new Fixture[MAX_PLANETS];
+    private static World world;
 
 
     public Planets(World world, float x, float y, float radius, float density, String string) {
@@ -40,15 +43,14 @@ public class Planets extends InputAdapter {
 
         bodyDef.position.set(x + NUMBER_OF_PLANETS, 0);
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
-        Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
-        planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
-        System.out.println("Planet Created: " + NUMBER_OF_PLANETS);
-        System.out.println("Mass" + planet[NUMBER_OF_PLANETS].getMass());
+        planetFixtures[NUMBER_OF_PLANETS] = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
+        planetFixtures[NUMBER_OF_PLANETS].setUserData("Planet" + NUMBER_OF_PLANETS);
+        System.out.println("Mass " + planet[NUMBER_OF_PLANETS].getMass());
         planet[NUMBER_OF_PLANETS].setUserData(string);
 
         if(NUMBER_OF_PLANETS != 0) {
             float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS);
-            System.out.println("Velocity " + velocity);
+//            System.out.println("Velocity " + velocity);
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
         }
 
@@ -74,15 +76,23 @@ public class Planets extends InputAdapter {
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
         Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
         planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
-        System.out.println("Planet Created: " + NUMBER_OF_PLANETS);
+        System.out.println("Planet Created: " + planet[NUMBER_OF_PLANETS].getMass());
 
         if(NUMBER_OF_PLANETS != 0) {
             float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y);
-            System.out.println("Velocity " + velocity);
+//            System.out.println("Velocity " + velocity);
 
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
         }
         NUMBER_OF_PLANETS++;    // New Planet
+    }
+
+    public static Fixture getFixture(int i) {
+        return planetFixtures[i];
+    }
+
+    public static World getWorld() {
+        return world;
     }
 
     @Override
@@ -133,5 +143,27 @@ public class Planets extends InputAdapter {
     }
 
 
+    public static void ResizePlanets(int i, Vector2 position, Vector2 velocity, float mass, float radius) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(radius);
+
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = circleShape;
+        float density = GravitationalForce.getNewDensity(mass, radius);
+        System.out.println("Density " + density);
+        fixDef.density = density;
+        fixDef.restitution = .1f;
+        fixDef.friction = .5f;
+
+        bodyDef.position.set(position);
+        planet[i].destroyFixture(planetFixtures[i]);
+        Fixture planetFixture = planet[i].createFixture(fixDef);
+        planetFixture.setUserData("Planet" + i);
+        System.out.println("Planet MASS: " + planet[i].getMass());
+
+        planet[i].setLinearVelocity(velocity);
+    }
 }
