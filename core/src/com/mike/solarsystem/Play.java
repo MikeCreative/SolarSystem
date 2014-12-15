@@ -33,12 +33,10 @@ public class Play implements Screen {
 
     float timestep = 1 / 60f;
 
-    private CentralPlanet centralPlanet;
     private Planets planet;
     FPSLogger fpsLogger;
     private int mode = Globals.SIMULATION;
 //    private RayHandler rayHandler;
-
 
 
     @Override
@@ -46,7 +44,6 @@ public class Play implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);   // Green background
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
-
 
         planetUpdate();
         OrbitalInformation.trajectory();
@@ -59,7 +56,6 @@ public class Play implements Screen {
 
         // UI Elements
         UserInterface.updateUI();
-
         CameraHandler.CameraHandler(camera);
 
 
@@ -67,10 +63,9 @@ public class Play implements Screen {
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
 //        rayHandler.updateAndRender();
-
         debugRenderer.render(world, camera.combined);
-
         world.step(timestep, 8, 3);
+//        doPhysicsStep(delta * Globals.TIME_MULTIPLIER);
     }
 
     @Override
@@ -91,15 +86,15 @@ public class Play implements Screen {
 //        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
         // Central Planet - SUN
-        planet = new Planets(world, 0, 0, Globals.planetRadiusSimulation[0], Globals.planetDensitiesSimulation[0], "SUN");
+        planet = new Planets(world, 0, 0, Globals.planetRadiusSimulation[0]/10, Globals.planetDensitiesSimulation[0]/10, "SUN");
         // Mercury
-        planet = new Planets(world, 5700, 0, Globals.planetRadiusSimulation[1], Globals.planetDensitiesSimulation[1], "MERCURY");
+        planet = new Planets(world, 460, 0, Globals.planetRadiusSimulation[1]/10, Globals.planetDensitiesSimulation[1]/10, "MERCURY");
         // Venus
-        planet = new Planets(world, 10800, 0, Globals.planetRadiusSimulation[2], Globals.planetDensitiesSimulation[2], "VENUS");
+        planet = new Planets(world, 1070, 0, Globals.planetRadiusSimulation[2]/10, Globals.planetDensitiesSimulation[2]/10, "VENUS");
         // Earth
-        planet = new Planets(world, 15000, 0, Globals.planetRadiusSimulation[3], Globals.planetDensitiesSimulation[3], "EARTH");
+        planet = new Planets(world, 1470, 0, Globals.planetRadiusSimulation[3]/10, Globals.planetDensitiesSimulation[3]/10, "EARTH");
         // Mars
-        planet = new Planets(world, 22800, 0, Globals.planetRadiusSimulation[4], Globals.planetDensitiesSimulation[4], "MARS");
+        planet = new Planets(world, 2050, 0, Globals.planetRadiusSimulation[4]/10, Globals.planetDensitiesSimulation[4]/10, "MARS");
 //        planet = new Planets(world, 350, 0, 4);
 
 //        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));

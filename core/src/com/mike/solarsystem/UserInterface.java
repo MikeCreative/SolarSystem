@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import javafx.scene.shape.MoveTo;
-
 /**
  * Created by Mike on 13/12/2014.
  */
@@ -32,9 +30,9 @@ public class UserInterface {
 
     // UI Elements
     private static SelectBox selectBox;
-    private static Label SelectedPlanet, CurrentZoom;
+    private static Label SelectedPlanet, CurrentZoom, CurrentTime;
 
-    private static Slider slider;
+    private static Slider zoomSlider, timeSlider;
     private static Window window;
 
     private static TextButton changeMode;
@@ -57,18 +55,37 @@ public class UserInterface {
         SelectedPlanet.setBounds(selectBox.getX() + selectBox.getWidth(), Gdx.graphics.getHeight() - SelectedPlanet.getHeight(), SelectedPlanet.getWidth(), SelectedPlanet.getHeight());
 
         // DISTANCE ITEMS
-        slider = new Slider(Globals.MIN_ZOOM, Globals.MAX_ZOOM, Globals.MIN_ZOOM, false, skin);
-        slider.setValue(Globals.CAMERA_ZOOM);
-        slider.setBounds(50, 100, 600, 100);
-        slider.addListener(new ChangeListener() {
+        zoomSlider = new Slider(Globals.MIN_ZOOM, Globals.MAX_ZOOM, Globals.MIN_ZOOM, false, skin);
+        zoomSlider.setValue(Globals.CAMERA_ZOOM);
+        zoomSlider.setBounds(50, 100, 600, 100);
+        zoomSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Globals.CAMERA_ZOOM = slider.getValue();
+                Globals.CAMERA_ZOOM = zoomSlider.getValue();
             }
         });
 
         CurrentZoom = new Label("Zoom: ", skin);
         CurrentZoom.setBounds(50, 50, 100, 50);
+
+        //Time Items
+        timeSlider = new Slider(Globals.MIN_TIME, Globals.MAX_TIME, Globals.TIME_MULTIPLIER, false, skin);
+        timeSlider.setValue(Globals.TIME_MULTIPLIER);
+        timeSlider.setBounds(100 + zoomSlider.getWidth(), 100, 600, 100);
+        timeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int currentTime = Globals.TIME_MULTIPLIER;
+                int newTime = (int) timeSlider.getValue();
+                Globals.TIME_MULTIPLIER = newTime;
+                Physics.updatePlanetVelocity((float) currentTime, (float) newTime);
+            }
+        });
+
+        CurrentTime = new Label("Current Time: 1x", skin);
+        CurrentTime.setBounds(timeSlider.getX(), 100, CurrentTime.getWidth(), CurrentTime.getHeight());
+
+
 
         changeMode = new TextButton("Change Mode ", skin);
         changeMode.setBounds(0, 250, changeMode.getWidth(), changeMode.getHeight());
@@ -88,8 +105,11 @@ public class UserInterface {
         stage.addActor(selectBox);
         stage.addActor(SelectedPlanet);
         stage.addActor(CurrentZoom);
-        stage.addActor(slider);
+        stage.addActor(zoomSlider);
         stage.addActor(changeMode);
+        stage.addActor(timeSlider);
+        stage.addActor(CurrentTime);
+
 
         //TODO Implement Information Window
         window = new Window("Planet Info", skin);
@@ -114,7 +134,9 @@ public class UserInterface {
             CloseInfoWindow();
         }
 
-        slider.setValue(Globals.CAMERA_ZOOM);
+        CurrentTime.setText("Current Time: " + Globals.TIME_MULTIPLIER + "x");
+        timeSlider.setValue(Globals.TIME_MULTIPLIER);
+        zoomSlider.setValue(Globals.CAMERA_ZOOM);
 
         CurrentZoom.setText("Zoom: " + Globals.CAMERA_ZOOM);
         if (selectBox.getSelectedIndex() != SelectedIndex){

@@ -49,9 +49,9 @@ public class Planets extends InputAdapter {
         planet[NUMBER_OF_PLANETS].setUserData(string);
 
         if(NUMBER_OF_PLANETS != 0) {
-            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS);
-//            System.out.println("Velocity " + velocity);
-            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
+            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS, NUMBER_OF_PLANETS);
+            System.out.println("Velocity " + velocity);
+            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity);
         }
 
         NUMBER_OF_PLANETS++;    // New Planet
@@ -79,10 +79,10 @@ public class Planets extends InputAdapter {
         System.out.println("Planet Created: " + planet[NUMBER_OF_PLANETS].getMass());
 
         if(NUMBER_OF_PLANETS != 0) {
-            float velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y);
-//            System.out.println("Velocity " + velocity);
+            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y, NUMBER_OF_PLANETS);
+            System.out.println("Velocity " + velocity);
 
-            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, velocity);
+            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity);
         }
         NUMBER_OF_PLANETS++;    // New Planet
     }
@@ -100,8 +100,8 @@ public class Planets extends InputAdapter {
         switch (keycode){
             case Input.Keys.RIGHT:
 //                System.out.println("Right");
-                if (Globals.TIME_MULTIPLIER < 20){
-                    Globals.TIME_MULTIPLIER += 1;
+                if (Globals.TIME_MULTIPLIER < 100){
+                    Globals.TIME_MULTIPLIER += 10;
                 }
                 break;
             case Input.Keys.LEFT:
@@ -116,7 +116,7 @@ public class Planets extends InputAdapter {
             default:
                 return false;
         }
-//        System.out.println(Globals.TIME_MULTIPLIER + " " + Globals.GRAVITATIONAL_CONSTANT);
+        System.out.println("Multipler " + Globals.TIME_MULTIPLIER);
         return true;
     }
 

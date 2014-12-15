@@ -41,7 +41,7 @@ public class CameraHandler {
                 differenceY = cameraY - currentY;
                 Globals.CAMERA_ZOOM = currentZoom - Zoomdifference/10;
 
-                if ((Math.abs(differenceX) < 1) && (Math.abs(differenceY) < 2) && (Math.abs(Zoomdifference) < 0.01) ){
+                if ((Math.abs(differenceX) < 0.1) && (Math.abs(differenceY) < 0.2) && (Math.abs(Zoomdifference) < 0.01) ){
                     System.out.println("Camera Move Successful");
                     Globals.CAMERA_MOVING = false;
                 }

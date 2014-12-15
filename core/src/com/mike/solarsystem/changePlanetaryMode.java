@@ -16,7 +16,7 @@ public class changePlanetaryMode {
                 float mass = Planets.getPlanet(i).getMass();
 
                 // Create New Planet
-                Planets.ResizePlanets(i, Position, Velocity, mass, Globals.planetRadiusSimulation[i]);
+                Planets.ResizePlanets(i, Position, Velocity, mass, Globals.planetRadiusSimulation[i]/10);
             }
         } else {                                    // If mode was changed to Arcade mode
             for (int i = 0; i < Globals.NUMBER_OF_PLANETS; i++){
@@ -26,7 +26,7 @@ public class changePlanetaryMode {
                 float mass = Planets.getPlanet(i).getMass();
 
                 // Create New Planet
-                Planets.ResizePlanets(i, Position, Velocity, mass, Globals.planetRadiusArcade[i]);
+                Planets.ResizePlanets(i, Position, Velocity, mass, Globals.planetRadiusArcade[i]/10);
             }
         }
         //TODO: Get this working - Feels wrong
