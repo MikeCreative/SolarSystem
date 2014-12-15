@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -39,11 +43,13 @@ public class Play implements Screen {
 //    private RayHandler rayHandler;
 
 
+    private Array<Body> tmpBodies = new Array<Body>();
+
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);   // Green background
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
 
         planetUpdate();
         OrbitalInformation.trajectory();
@@ -54,18 +60,36 @@ public class Play implements Screen {
             changePlanetaryMode.changeMode();
         }
 
+
+
+        // Images
+        // TODO: add depth so that the right objects are drawn first etc
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+        world.getBodies(tmpBodies);
+        for (Body body : tmpBodies){
+            if(body.getUserData() instanceof Sprite){
+                Sprite sprite = (Sprite) body.getUserData();
+                sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
+//                sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+                sprite.draw(batch);
+            }
+
+        }
+        batch.end();
+
+
         // UI Elements
         UserInterface.updateUI();
+        InfoWindow.UpdateInformation();
         CameraHandler.CameraHandler(camera);
-
-
 
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
 //        rayHandler.updateAndRender();
         debugRenderer.render(world, camera.combined);
         world.step(timestep, 8, 3);
-//        doPhysicsStep(delta * Globals.TIME_MULTIPLIER);
     }
 
     @Override

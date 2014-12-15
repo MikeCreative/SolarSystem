@@ -2,6 +2,8 @@ package com.mike.solarsystem;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,6 +24,7 @@ public class Planets extends InputAdapter {
     World current_world;
     private static Body[] planet = new Body[MAX_PLANETS];
     private static Fixture[] planetFixtures = new Fixture[MAX_PLANETS];
+    private static Sprite[] planetSprites = new Sprite[MAX_PLANETS];
     private static World world;
 
 
@@ -44,9 +47,14 @@ public class Planets extends InputAdapter {
         bodyDef.position.set(x + NUMBER_OF_PLANETS, 0);
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
         planetFixtures[NUMBER_OF_PLANETS] = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
-        planetFixtures[NUMBER_OF_PLANETS].setUserData("Planet" + NUMBER_OF_PLANETS);
         System.out.println("Mass " + planet[NUMBER_OF_PLANETS].getMass());
         planet[NUMBER_OF_PLANETS].setUserData(string);
+
+        // Sprite
+        planetSprites[NUMBER_OF_PLANETS] = new Sprite(new Texture("planets/" + Globals.planetStrings[NUMBER_OF_PLANETS] + ".png"));
+        planetSprites[NUMBER_OF_PLANETS].setSize(radius*2, radius*2);
+        planetSprites[NUMBER_OF_PLANETS].setOrigin(planetSprites[NUMBER_OF_PLANETS].getWidth()/2, planetSprites[NUMBER_OF_PLANETS].getHeight()/2);
+        planet[NUMBER_OF_PLANETS].setUserData(planetSprites[NUMBER_OF_PLANETS]);
 
         if(NUMBER_OF_PLANETS != 0) {
             double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS, NUMBER_OF_PLANETS);
@@ -77,6 +85,12 @@ public class Planets extends InputAdapter {
         Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
         planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
         System.out.println("Planet Created: " + planet[NUMBER_OF_PLANETS].getMass());
+
+        // Sprite
+        planetSprites[NUMBER_OF_PLANETS] = new Sprite(new Texture("planets/" + Globals.planetStrings[NUMBER_OF_PLANETS] + ".png"));
+        planetSprites[NUMBER_OF_PLANETS].setSize(radius*2, radius*2);
+        planetSprites[NUMBER_OF_PLANETS].setOrigin(planetSprites[NUMBER_OF_PLANETS].getWidth()/2, planetSprites[NUMBER_OF_PLANETS].getHeight()/2);
+        planet[NUMBER_OF_PLANETS].setUserData(planetSprites[NUMBER_OF_PLANETS]);
 
         if(NUMBER_OF_PLANETS != 0) {
             double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y, NUMBER_OF_PLANETS);
@@ -163,6 +177,12 @@ public class Planets extends InputAdapter {
         Fixture planetFixture = planet[i].createFixture(fixDef);
         planetFixture.setUserData("Planet" + i);
         System.out.println("Planet MASS: " + planet[i].getMass());
+
+        // Sprite
+        planetSprites[i] = new Sprite(new Texture("planets/" + Globals.planetStrings[i] + ".png"));
+        planetSprites[i].setSize(radius*2, radius*2);
+        planetSprites[i].setOrigin(planetSprites[i].getWidth()/2, planetSprites[i].getHeight()/2);
+        planet[i].setUserData(planetSprites[i]);
 
         planet[i].setLinearVelocity(velocity);
     }

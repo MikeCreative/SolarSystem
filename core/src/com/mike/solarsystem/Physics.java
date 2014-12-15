@@ -37,9 +37,12 @@ public class Physics {
                     yForce += (float) (gravity * Math.sin(rotation));
                 }
             }
-            if ( i == 1) {
+//            if ( i == 1) {
 //                System.out.println("Force Out " + gravity*Globals.TIME_MULTIPLIER + " Current Speed " + Planets.getPlanet(i).getLinearVelocity() + " Acceleration Force " + GravitationalForce.computePlanetAccelerationVector(Planets.getPlanet(i).getMass(),(float) Math.sqrt(distance), Planets.getPlanet(i).getLinearVelocity())*Planets.getPlanet(i).getMass());
-            }
+//            }
+            Globals.forcesXArray[i] = xForce;
+            Globals.forcesYArray[i] = yForce;
+
             Planets.getPlanet(i).applyForceToCenter((float) (-xForce*Globals.TIME_MULTIPLIER),(float) (-yForce*Globals.TIME_MULTIPLIER), true);
         }
     }
@@ -51,7 +54,7 @@ public class Physics {
             double currentVelocityY = Planets.getPlanet(i).getLinearVelocity().y;
             double newVelocityX;
             double newVelocityY;
-            System.out.println("Divisor " + newTime/currentTime);
+//            System.out.println("Divisor " + newTime/currentTime);
             newVelocityX = currentVelocityX * Math.sqrt(newTime/currentTime);
             newVelocityY = currentVelocityY * Math.sqrt(newTime/currentTime);
             Planets.getPlanet(i).setLinearVelocity((float) newVelocityX,(float) newVelocityY);

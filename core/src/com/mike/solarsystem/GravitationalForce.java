@@ -43,4 +43,12 @@ public class GravitationalForce {
         return acceleration;
     }
 
+    public static float getDistance(int planet1, int planet2){
+        float distance = 0;
+
+        distance = Planets.getPlanet(planet1).getPosition().x*Planets.getPlanet(planet1).getPosition().x + Planets.getPlanet(planet1).getPosition().y*Planets.getPlanet(planet1).getPosition().y;
+
+        return (float) Math.sqrt(distance);
+    }
+
 }

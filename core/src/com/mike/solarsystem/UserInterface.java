@@ -33,7 +33,6 @@ public class UserInterface {
     private static Label SelectedPlanet, CurrentZoom, CurrentTime;
 
     private static Slider zoomSlider, timeSlider;
-    private static Window window;
 
     private static TextButton changeMode;
 
@@ -111,13 +110,7 @@ public class UserInterface {
         stage.addActor(CurrentTime);
 
 
-        //TODO Implement Information Window
-        window = new Window("Planet Info", skin);
-        window.setBounds(Gdx.graphics.getWidth() + window.getWidth(), 0, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
-        window.setKeepWithinStage(false);
-
-
-        stage.addActor(window);
+        stage.addActor(InfoWindow.CreateInfoWindow());
 
     }
 
@@ -125,13 +118,13 @@ public class UserInterface {
         if (Globals.TRACKING_STATE) {
             if (Globals.CAMERA_MOVING) {
                 SelectedPlanet.setText("Camera Moving...  " + Globals.planetStrings[Globals.TRACKING_PLANET]);
-                OpenInfoWindow();
+                InfoWindow.OpenInfoWindow();
             } else {
                 SelectedPlanet.setText("Tracking: " + Globals.planetStrings[Globals.TRACKING_PLANET]);
             }
         } else {
             SelectedPlanet.setText("Currently Selected Planet: NONE");
-            CloseInfoWindow();
+            InfoWindow.CloseInfoWindow();
         }
 
         CurrentTime.setText("Current Time: " + Globals.TIME_MULTIPLIER + "x");
@@ -151,20 +144,7 @@ public class UserInterface {
         stage.draw();
     }
 
-    private static void CloseInfoWindow() {
-        MoveToAction action = new MoveToAction();
-        action.setPosition(window.getWidth() + Gdx.graphics.getWidth(), 0);
-        action.setDuration(2f);
-        window.addAction(action);
-    }
 
-    private static void OpenInfoWindow() {
-        MoveToAction action = new MoveToAction();
-        action.setPosition(Gdx.graphics.getWidth() - window.getWidth(), 0);
-        action.setDuration(0.5f  );
-        window.addAction(action);
-
-    }
 
     //TODO;
     public static void dispose(){
@@ -174,5 +154,9 @@ public class UserInterface {
 
     public static Stage getStage() {
         return stage;
+    }
+
+    public static Skin getSkin() {
+        return skin;
     }
 }
