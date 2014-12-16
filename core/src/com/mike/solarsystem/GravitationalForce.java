@@ -18,14 +18,26 @@ public class GravitationalForce {
     public static double tangentalVelocity(float mass1, float mass2, float distance, int i){
         double velocity;
 
-        velocity = (double) (Globals.GRAVITATIONAL_CONSTANT*(mass2)/(distance));
-
+        // Circular
+//        velocity = (double) (Globals.GRAVITATIONAL_CONSTANT*(mass2)/(distance));
         // Elliptic orbit
-//        velocity = (float) (Globals.GRAVITATIONAL_CONSTANT*(mass2)*((2/distance) - (1/Globals.planetSemiMajorAxis[i])));
-//
+        velocity = (float) (Globals.GRAVITATIONAL_CONSTANT*(mass2 + mass1)*((2/distance) - (1f/Globals.planetSemiMajorAxis[i])));
 
         return (double) Math.sqrt(velocity);
     }
+
+
+    public static double tangentalVelocityMoon(float mass1, float mass2, float distance, int i){
+        double velocity;
+
+        // Circular
+//        velocity = (double) (Globals.GRAVITATIONAL_CONSTANT*(mass2)/(distance));
+        // Elliptic orbit
+        velocity = (float) (Globals.GRAVITATIONAL_CONSTANT*(mass2 + mass1)*((2/distance) - (1f/Globals.planetSemiMajorAxis[i])));
+
+        return (double) Math.sqrt(velocity);
+    }
+
 
     public static float getNewDensity(float mass, float radius){
         float density;
@@ -49,6 +61,21 @@ public class GravitationalForce {
         distance = Planets.getPlanet(planet1).getPosition().x*Planets.getPlanet(planet1).getPosition().x + Planets.getPlanet(planet1).getPosition().y*Planets.getPlanet(planet1).getPosition().y;
 
         return (float) Math.sqrt(distance);
+    }
+
+    public static float pythagoras(float a, float b){
+        float c = 0;
+        c = a*a + b*b;
+
+        return (float) Math.sqrt(c);
+    }
+
+    public static float semiMinorAxis(float semiMajorAxis, float eccentricity){
+        float minorAxis = 0;
+
+        minorAxis = (float) (semiMajorAxis * Math.sqrt(1 - Math.pow(eccentricity, 2)));
+
+        return minorAxis;
     }
 
 }

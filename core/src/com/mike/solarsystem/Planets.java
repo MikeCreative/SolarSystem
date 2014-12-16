@@ -65,7 +65,7 @@ public class Planets extends InputAdapter {
         NUMBER_OF_PLANETS++;    // New Planet
     }
 
-    public static void Moon(World world, float x, float y, float radius, Body MotherPlanet){
+    public static void Moon(World world, float x, float y, float radius, float density,  Body MotherPlanet){
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -76,7 +76,7 @@ public class Planets extends InputAdapter {
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = circleShape;
-        fixDef.density = 100;
+        fixDef.density = density;
         fixDef.restitution = .1f;
         fixDef.friction = .5f;
 
@@ -93,10 +93,10 @@ public class Planets extends InputAdapter {
         planet[NUMBER_OF_PLANETS].setUserData(planetSprites[NUMBER_OF_PLANETS]);
 
         if(NUMBER_OF_PLANETS != 0) {
-            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getLinearVelocity().y, NUMBER_OF_PLANETS);
+            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getPosition().x, NUMBER_OF_PLANETS);
             System.out.println("Velocity " + velocity);
 
-            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity);
+            planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity + MotherPlanet.getLinearVelocity().y);
         }
         NUMBER_OF_PLANETS++;    // New Planet
     }

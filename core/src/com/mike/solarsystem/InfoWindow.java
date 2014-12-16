@@ -35,13 +35,14 @@ public class InfoWindow {
 
 
         window.row();
-        window.add(planet);
+        window.add(planet).left();
         window.row();
-        window.add(velocity);
+        window.add(velocity).left();
         window.row();
-        window.add(distance);
+        window.add(distance).left();
         window.row();
-        window.add(force);
+        window.add(force).left();
+        window.row();
 
         return window;
 
@@ -52,9 +53,9 @@ public class InfoWindow {
         int currentPlanet = Globals.TRACKING_PLANET;
         DecimalFormat df = new DecimalFormat("#.00");
         planet.setText("Planet: " + Globals.planetStrings[currentPlanet]);
-        velocity.setText("vx = " + df.format(Planets.getPlanet(currentPlanet).getLinearVelocity().x) + "m/s");
+        velocity.setText("v = " + df.format(GravitationalForce.pythagoras(Planets.getPlanet(currentPlanet).getLinearVelocity().x, Planets.getPlanet(currentPlanet).getLinearVelocity().y)/Math.sqrt(Globals.TIME_MULTIPLIER)) + "m/s");
         distance.setText("d = " + df.format(GravitationalForce.getDistance(currentPlanet, 0)) + "m");
-        force.setText("F = " +  df.format(Globals.forcesXArray[currentPlanet]));
+        force.setText("F = " +  df.format(GravitationalForce.pythagoras(Globals.forcesXArray[currentPlanet], Globals.forcesYArray[currentPlanet])));
 
 
     }

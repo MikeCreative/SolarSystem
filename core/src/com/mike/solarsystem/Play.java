@@ -52,7 +52,7 @@ public class Play implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         planetUpdate();
-        OrbitalInformation.trajectory();
+        OrbitalInformation.trajectory(camera);
 
         // Check Mode
         if (Globals.MODE != mode){
@@ -107,22 +107,15 @@ public class Play implements Screen {
         debugRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
 
-//        centralPlanet = new CentralPlanet(world, 0, 0, 20);
 
-        // Central Planet - SUN
-        planet = new Planets(world, 0, 0, Globals.planetRadiusSimulation[0]/10, Globals.planetDensitiesSimulation[0]/10, "SUN");
-        // Mercury
-        planet = new Planets(world, 460, 0, Globals.planetRadiusSimulation[1]/10, Globals.planetDensitiesSimulation[1]/10, "MERCURY");
-        // Venus
-        planet = new Planets(world, 1070, 0, Globals.planetRadiusSimulation[2]/10, Globals.planetDensitiesSimulation[2]/10, "VENUS");
-        // Earth
-        planet = new Planets(world, 1470, 0, Globals.planetRadiusSimulation[3]/10, Globals.planetDensitiesSimulation[3]/10, "EARTH");
-        // Mars
-        planet = new Planets(world, 2050, 0, Globals.planetRadiusSimulation[4]/10, Globals.planetDensitiesSimulation[4]/10, "MARS");
-//        planet = new Planets(world, 350, 0, 4);
 
-//        Planets.Moon(world, 10, 0, 0.5f, Planets.getPlanet(3));
-//        Planets.Moon(world, -10, 0, 0.5f, Planets.getPlanet(3));
+        for (int i = 0; i < 9; i++) {
+            planet = new Planets(world, Globals.planetStartingXDistance[i], 0, Globals.planetRadiusSimulation[i], Globals.planetDensitiesSimulation[i]/10, "SUN");
+        }
+
+        //TODO: Get the Moon Working
+        //Moon
+//        Planets.Moon(world, Globals.planetStartingXDistance[9], 0, Globals.planetRadiusSimulation[9], Globals.planetDensitiesSimulation[9]/10, Planets.getPlanet(3));
 
         // UI Elements
         UserInterface.CreateInterface();
