@@ -41,14 +41,21 @@ public class CameraHandler {
                 differenceY = cameraY - currentY;
                 Globals.CAMERA_ZOOM = currentZoom - Zoomdifference/10;
 
-                if ((Math.abs(differenceX) < 0.001) && (Math.abs(differenceY) < 0.001) && (Math.abs(Zoomdifference) < 0.001) ){
+                if ((Math.abs(differenceX) < 0.02) && (Math.abs(differenceY) < 0.02) && (Math.abs(Zoomdifference) < 0.01) ){
                     System.out.println("Camera Move Successful");
                     Globals.CAMERA_MOVING = false;
                 }
 //                System.out.println("Distance Camera Planet " + differenceX + " " + differenceY);
-                Globals.CAMERA_X = cameraX - differenceX/5;
-                Globals.CAMERA_Y = cameraY - differenceY/5;
 
+
+                // TODO: Different Levels of Camera Movement
+                if ((Math.abs(differenceX) < 0.2) && (Math.abs(differenceY) < 0.2) && (Math.abs(Zoomdifference) < 0.01) ) {
+                    Globals.CAMERA_X = cameraX - differenceX;
+                    Globals.CAMERA_Y = cameraY - differenceY;
+                } else {
+                    Globals.CAMERA_X = cameraX - differenceX/5;
+                    Globals.CAMERA_Y = cameraY - differenceY/5;
+                }
             } else {
              Globals.CAMERA_X = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().x;
                 Globals.CAMERA_Y = Planets.getPlanet(Globals.TRACKING_PLANET).getPosition().y;

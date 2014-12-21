@@ -79,11 +79,12 @@ public class TouchGestureDetection implements GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        UserInterface.getComboBox().setSelectedIndex(0);
         Globals.FLING = false;
         Globals.TRACKING_STATE = false; // User is moving the camera around, so stop tracking the current planet
         Globals.CAMERA_X += -deltaX*Globals.CAMERA_ZOOM*Globals.CAMERA_PAN;
         Globals.CAMERA_Y += deltaY*Globals.CAMERA_ZOOM*Globals.CAMERA_PAN;
-        System.out.println("pan X: " + x + " " + y + " " + deltaX + " " + deltaY);
+//        System.out.println("pan X: " + x + " " + y + " " + deltaX + " " + deltaY);
         return false;
     }
 
@@ -98,7 +99,7 @@ public class TouchGestureDetection implements GestureDetector.GestureListener {
         float ratio = initialDistance / distance;
 
         Globals.CAMERA_ZOOM = MathUtils.clamp(initalScale * ratio, Globals.MIN_ZOOM, Globals.MAX_ZOOM);
-        System.out.println("zoom");
+//        System.out.println("zoom");
 
 
         return false;

@@ -44,7 +44,7 @@ public class Planets extends InputAdapter {
         fixDef.restitution = .1f;
         fixDef.friction = .5f;
 
-        bodyDef.position.set(x + NUMBER_OF_PLANETS, 0);
+        bodyDef.position.set(x, 0);
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
         planetFixtures[NUMBER_OF_PLANETS] = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
         System.out.println("Mass " + planet[NUMBER_OF_PLANETS].getMass());
@@ -52,12 +52,13 @@ public class Planets extends InputAdapter {
 
         // Sprite
         planetSprites[NUMBER_OF_PLANETS] = new Sprite(new Texture("planets/" + Globals.planetStrings[NUMBER_OF_PLANETS] + ".png"));
+        System.out.println("Planet made " + string);
         planetSprites[NUMBER_OF_PLANETS].setSize(radius*2, radius*2);
         planetSprites[NUMBER_OF_PLANETS].setOrigin(planetSprites[NUMBER_OF_PLANETS].getWidth()/2, planetSprites[NUMBER_OF_PLANETS].getHeight()/2);
         planet[NUMBER_OF_PLANETS].setUserData(planetSprites[NUMBER_OF_PLANETS]);
 
         if(NUMBER_OF_PLANETS != 0) {
-            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x + NUMBER_OF_PLANETS, NUMBER_OF_PLANETS);
+            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), planet[0].getMass(), x, NUMBER_OF_PLANETS);
             System.out.println("Velocity " + velocity);
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity);
         }
@@ -66,6 +67,7 @@ public class Planets extends InputAdapter {
     }
 
     public static void Moon(World world, float x, float y, float radius, float density,  Body MotherPlanet){
+        System.out.println("Moon Created" + NUMBER_OF_PLANETS);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -82,9 +84,9 @@ public class Planets extends InputAdapter {
 
         bodyDef.position.set(MotherPlanet.getPosition().x + x, MotherPlanet.getPosition().y + 0);
         planet[NUMBER_OF_PLANETS] = world.createBody(bodyDef);
-        Fixture planetFixture = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
-        planetFixture.setUserData("Planet" + NUMBER_OF_PLANETS);
-        System.out.println("Planet Created: " + planet[NUMBER_OF_PLANETS].getMass());
+        planetFixtures[NUMBER_OF_PLANETS] = planet[NUMBER_OF_PLANETS].createFixture(fixDef);
+        planetFixtures[NUMBER_OF_PLANETS].setUserData("Planet" + NUMBER_OF_PLANETS);
+        System.out.println("Planet Created: Distance" + x);
 
         // Sprite
         planetSprites[NUMBER_OF_PLANETS] = new Sprite(new Texture("planets/" + Globals.planetStrings[NUMBER_OF_PLANETS] + ".png"));
@@ -93,11 +95,12 @@ public class Planets extends InputAdapter {
         planet[NUMBER_OF_PLANETS].setUserData(planetSprites[NUMBER_OF_PLANETS]);
 
         if(NUMBER_OF_PLANETS != 0) {
-            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x + MotherPlanet.getPosition().x, NUMBER_OF_PLANETS);
-            System.out.println("Velocity " + velocity);
+            double velocity = GravitationalForce.tangentalVelocity(planet[NUMBER_OF_PLANETS].getMass(), MotherPlanet.getMass(), x, NUMBER_OF_PLANETS);
+//            System.out.println("Velocity " + velocity);
 
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity + MotherPlanet.getLinearVelocity().y);
         }
+        NUMBER_OF_MOONS++;
         NUMBER_OF_PLANETS++;    // New Planet
     }
 

@@ -110,12 +110,12 @@ public class Play implements Screen {
 
 
         for (int i = 0; i < 9; i++) {
-            planet = new Planets(world, Globals.planetStartingXDistance[i], 0, Globals.planetRadiusSimulation[i], Globals.planetDensitiesSimulation[i]/10, "SUN");
+            planet = new Planets(world, Globals.planetStartingXDistance[i], 0, Globals.planetRadiusSimulation[i], Globals.planetDensitiesSimulation[i]/10, Globals.planetStrings[i]);
         }
 
         //TODO: Get the Moon Working
         //Moon
-//        Planets.Moon(world, Globals.planetStartingXDistance[9], 0, Globals.planetRadiusSimulation[9], Globals.planetDensitiesSimulation[9]/10, Planets.getPlanet(3));
+        Planets.Moon(world, Globals.planetStartingXDistance[9], 0, Globals.planetRadiusSimulation[9], Globals.planetDensitiesSimulation[9]/10, Planets.getPlanet(3));
 
         // UI Elements
         UserInterface.CreateInterface();

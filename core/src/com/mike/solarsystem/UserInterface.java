@@ -48,29 +48,39 @@ public class UserInterface {
         selectBox = new SelectBox(skin);
         selectBox.setItems(Globals.planetStrings);
         selectBox.setBounds(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 15, Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 15);
+        selectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("I was changed " + selectBox.getSelectedIndex());
+                Globals.TRACKING_PLANET = selectBox.getSelectedIndex();
+//                selectBox.setSelectedIndex(0);
+                Globals.TRACKING_STATE = true;
+                Globals.CAMERA_MOVING = true;
+            }
+        });
 
         // Selected Planet Text
         SelectedPlanet = new Label("No Planet Currently Selected", skin);
         SelectedPlanet.setBounds(selectBox.getX() + selectBox.getWidth(), Gdx.graphics.getHeight() - SelectedPlanet.getHeight(), SelectedPlanet.getWidth(), SelectedPlanet.getHeight());
 
-        // DISTANCE ITEMS
-        zoomSlider = new Slider(Globals.MIN_ZOOM, Globals.MAX_ZOOM, Globals.MIN_ZOOM, false, skin);
-        zoomSlider.setValue(Globals.CAMERA_ZOOM);
-        zoomSlider.setBounds(50, 100, 600, 100);
-        zoomSlider.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Globals.CAMERA_ZOOM = zoomSlider.getValue();
-            }
-        });
-
-        CurrentZoom = new Label("Zoom: ", skin);
-        CurrentZoom.setBounds(50, 50, 100, 50);
+//        // DISTANCE ITEMS
+//        zoomSlider = new Slider(Globals.MIN_ZOOM, Globals.MAX_ZOOM, Globals.MIN_ZOOM, false, skin);
+//        zoomSlider.setValue(Globals.CAMERA_ZOOM);
+//        zoomSlider.setBounds(50, 100, 600, 100);
+//        zoomSlider.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Globals.CAMERA_ZOOM = zoomSlider.getValue();
+//            }
+//        });
+//
+//        CurrentZoom = new Label("Zoom: ", skin);
+//        CurrentZoom.setBounds(50, 50, 100, 50);
 
         //Time Items
         timeSlider = new Slider(Globals.MIN_TIME, Globals.MAX_TIME, Globals.TIME_MULTIPLIER, false, skin);
         timeSlider.setValue(Globals.TIME_MULTIPLIER);
-        timeSlider.setBounds(100 + zoomSlider.getWidth(), 100, 600, 100);
+        timeSlider.setBounds(Gdx.graphics.getWidth()/10, Gdx.graphics.getHeight()/15, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/15);
         timeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -82,30 +92,30 @@ public class UserInterface {
         });
 
         CurrentTime = new Label("Current Time: 1x", skin);
-        CurrentTime.setBounds(timeSlider.getX(), 100, CurrentTime.getWidth(), CurrentTime.getHeight());
+        CurrentTime.setBounds(timeSlider.getX(), timeSlider.getY() - Gdx.graphics.getHeight()/15, CurrentTime.getWidth(), CurrentTime.getHeight());
 
 
 
-        changeMode = new TextButton("Change Mode ", skin);
-        changeMode.setBounds(0, 250, changeMode.getWidth(), changeMode.getHeight());
-        changeMode.addListener(new ClickListener(){
-        @Override
-        public void clicked (InputEvent event,float x, float y) {
-            if (Globals.MODE == Globals.SIMULATION) {
-                Globals.MODE = Globals.ARCADE;
-
-            } else {
-                Globals.MODE = Globals.SIMULATION;
-            }
-        }
-    });
+//        changeMode = new TextButton("Change Mode ", skin);
+//        changeMode.setBounds(0, 250, changeMode.getWidth(), changeMode.getHeight());
+//        changeMode.addListener(new ClickListener(){
+//        @Override
+//        public void clicked (InputEvent event,float x, float y) {
+//            if (Globals.MODE == Globals.SIMULATION) {
+//                Globals.MODE = Globals.ARCADE;
+//
+//            } else {
+//                Globals.MODE = Globals.SIMULATION;
+//            }
+//        }
+//    });
 
 
         stage.addActor(selectBox);
         stage.addActor(SelectedPlanet);
-        stage.addActor(CurrentZoom);
-        stage.addActor(zoomSlider);
-        stage.addActor(changeMode);
+//        stage.addActor(CurrentZoom);
+//        stage.addActor(zoomSlider);
+//        stage.addActor(changeMode);
         stage.addActor(timeSlider);
         stage.addActor(CurrentTime);
 
@@ -120,25 +130,25 @@ public class UserInterface {
                 SelectedPlanet.setText("Camera Moving...  " + Globals.planetStrings[Globals.TRACKING_PLANET]);
                 InfoWindow.OpenInfoWindow();
             } else {
-                SelectedPlanet.setText("Tracking: " + Globals.planetStrings[Globals.TRACKING_PLANET]);
+                SelectedPlanet.setText("Tracking: " + Globals.planetTitles[Globals.TRACKING_PLANET]);
             }
         } else {
-            SelectedPlanet.setText("Currently Selected Planet: NONE");
+            SelectedPlanet.setText("Select Planet");
             InfoWindow.CloseInfoWindow();
         }
 
         CurrentTime.setText("Current Time: " + Globals.TIME_MULTIPLIER + "x");
         timeSlider.setValue(Globals.TIME_MULTIPLIER);
-        zoomSlider.setValue(Globals.CAMERA_ZOOM);
+//        zoomSlider.setValue(Globals.CAMERA_ZOOM);
 
-        CurrentZoom.setText("Zoom: " + Globals.CAMERA_ZOOM);
-        if (selectBox.getSelectedIndex() != SelectedIndex){
-            System.out.println("Box was changed");
-            SelectedIndex = selectBox.getSelectedIndex();
-            Globals.TRACKING_PLANET = SelectedIndex;
-            Globals.TRACKING_STATE = true;
-            Globals.CAMERA_MOVING = true;
-        }
+//        CurrentZoom.setText("Zoom: " + Globals.CAMERA_ZOOM);
+//        if (selectBox.getSelectedIndex() != SelectedIndex){
+//            System.out.println("Box was changed");
+//            SelectedIndex = selectBox.getSelectedIndex();
+//            Globals.TRACKING_PLANET = SelectedIndex;
+//            Globals.TRACKING_STATE = true;
+//            Globals.CAMERA_MOVING = true;
+//        }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/60f));
         stage.draw();
@@ -158,5 +168,9 @@ public class UserInterface {
 
     public static Skin getSkin() {
         return skin;
+    }
+
+    public static SelectBox getComboBox() {
+        return selectBox;
     }
 }

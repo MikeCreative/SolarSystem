@@ -1,9 +1,13 @@
 package com.mike.solarsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.text.DecimalFormat;
 
@@ -17,6 +21,9 @@ public class InfoWindow {
     private static Window window;
 
     private static Label planet, velocity, distance, force;
+
+    private static Slider massSlider;
+    private static TextButton forceButton, accButton, velButton;
 
 
 
@@ -33,6 +40,32 @@ public class InfoWindow {
         distance = new Label("Distance ", UserInterface.getSkin());
         force = new Label("Force " , UserInterface.getSkin());
 
+        // Mass Slider Idea
+//        massSlider = new Slider(0, 100, 1, false, UserInterface.getSkin());
+
+        // Force Overlay
+        forceButton = new TextButton("Forces", UserInterface.getSkin());
+        forceButton.addListener(new ClickListener(){
+        @Override
+        public void clicked (InputEvent event,float x, float y) {
+            System.out.println("Add Force Overlay");
+             }
+        });
+        accButton = new TextButton("Accel", UserInterface.getSkin());
+        accButton.addListener(new ClickListener(){
+            @Override
+            public void clicked (InputEvent event,float x, float y) {
+                System.out.println("Add Acc Overlay");
+            }
+        });
+        velButton = new TextButton("Velocity", UserInterface.getSkin());
+        velButton.addListener(new ClickListener(){
+            @Override
+            public void clicked (InputEvent event,float x, float y) {
+                System.out.println("Add Velocity Overlay");
+            }
+        });
+
 
         window.row();
         window.add(planet).left();
@@ -42,7 +75,13 @@ public class InfoWindow {
         window.add(distance).left();
         window.row();
         window.add(force).left();
+//        window.row();
+//        window.add(massSlider);
         window.row();
+        window.add(forceButton);
+        window.add(accButton);
+        window.row();
+        window.add(velButton);
 
         return window;
 

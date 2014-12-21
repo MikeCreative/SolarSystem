@@ -8,8 +8,8 @@ import com.mike.solarsystem.SolarSystem;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-//        config.width = 1920;
-//        config.height = 1200;
+        config.width = 800;
+        config.height = 640;
 		new LwjglApplication(new SolarSystem(), config);
 	}
 }
