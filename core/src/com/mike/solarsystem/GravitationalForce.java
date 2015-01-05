@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Mike on 2/12/2014.
+ * Various Equations used for different aspects of this application
  */
 public class GravitationalForce {
 
@@ -50,7 +51,9 @@ public class GravitationalForce {
     public static double computePlanetAccelerationVector(float mass, float distance, Vector2 velocity){
         double acceleration = 0;
 
-        acceleration = (float) ((velocity.x*velocity.x + velocity.y*velocity.y))/distance;
+        double velcx = velocity.x/Math.sqrt(Globals.TIME_MULTIPLIER);
+        double velcy = velocity.y/Math.sqrt(Globals.TIME_MULTIPLIER);
+        acceleration = (float) ((velcx*velcx + velcy*velcy))/distance;
 
         return acceleration;
     }

@@ -53,7 +53,6 @@ public class Play implements Screen {
 
         planetUpdate();
         OrbitalInformation.trajectory(camera);
-
         // Check Mode
         if (Globals.MODE != mode){
             mode = Globals.MODE;
@@ -63,9 +62,7 @@ public class Play implements Screen {
 
 
         // Images
-        // TODO: add depth so that the right objects are drawn first etc
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
         world.getBodies(tmpBodies);
         for (Body body : tmpBodies){
@@ -79,6 +76,8 @@ public class Play implements Screen {
         }
         batch.end();
 
+        // Create The information Overlay
+        PhysicsOverlay.CreateVectorOverlay(camera);
 
         // UI Elements
         UserInterface.updateUI();

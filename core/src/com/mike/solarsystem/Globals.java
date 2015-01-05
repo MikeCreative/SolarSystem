@@ -55,4 +55,13 @@ public class Globals {
     public static float VelocityY;
 
 
+    // Vector Mode ( only 2^x)
+    final public static int NO_OVERLAY = 0;
+    final public static int FORCE_OVERLAY = 1;
+    final public static int ACCEL_OVERLAY = 2;
+    final public static int VELOCITY_OVERLAY = 4;
+
+
+    public static int VectorOverlayMode =                                                  FORCE_OVERLAY;
+
 }
