@@ -20,6 +20,7 @@ public class Globals {
     public static float[] planetStartingXDistance = {0f, 460, 1070,1470,2050,7410, 13500, 27500, 44500, 30f};
     public static float[] planetSemiMajorAxis = {(planetMaxXDistance[0] + planetStartingXDistance[0])/2, (planetMaxXDistance[1] + planetStartingXDistance[1])/2, (planetMaxXDistance[2] + planetStartingXDistance[2])/2, (planetMaxXDistance[3] + planetStartingXDistance[3])/2, (planetMaxXDistance[4] + planetStartingXDistance[4])/2, (planetMaxXDistance[5] + planetStartingXDistance[5])/2, (planetMaxXDistance[6] + planetStartingXDistance[6])/2, (planetMaxXDistance[7] + planetStartingXDistance[7])/2, (planetMaxXDistance[8] + planetStartingXDistance[8])/2, (planetMaxXDistance[9] + planetStartingXDistance[9])/2};
     public static float[] planetEccentricity = {0, 0.2056f, 0.0068f, 0.0167f, 0.0934f, 0.0484f, 0.0542f, 0.0472f, 0.0086f, 0.0549f};
+    public static float[] planetRotationalSpeed = {1,1,1,1,1,1,1,1,1,1};
 
     public static int[] moonMotherPlanet = {0,0,0,0,0,0,0,0,3};
 
@@ -47,7 +48,7 @@ public class Globals {
     public static boolean TRACKING_STATE = true;    //Camera is tracking a planet. Will e false if user manually moves the camera
     public static boolean CAMERA_MOVING = false;    //New planet has been selected, move Camera to the new planet
     public static float[] PLANETZOOMLEVELSIMULATION = {0.5f, 0.0001f, 0.0001f, 0.0001f, 0.0001f, 0.001f, 0.001f, 0.001f, 0.001f, 0.001f};
-    public static float[] PLANETZOOMLEVELARVADE = {0.5f, 0.005f, 0.015f, 0.015f, 0.01f, 0.01f, 0.2f, 0.2f, 0.2f, 0.005f};
+    public static float[] PLANETZOOMLEVELARVADE = {0.05f, 0.005f, 0.015f, 0.005f, 0.01f, 0.02f, 0.02f, 0.03f, 0.03f, 0.005f};
 
     // Fling
     public static boolean FLING = false;
@@ -56,12 +57,15 @@ public class Globals {
 
 
     // Vector Mode ( only 2^x)
-    final public static int NO_OVERLAY = 0;
-    final public static int FORCE_OVERLAY = 1;
-    final public static int ACCEL_OVERLAY = 2;
-    final public static int VELOCITY_OVERLAY = 4;
+    final public static byte NO_OVERLAY = 0x00;
+    final public static byte FORCE_OVERLAY = 0x01;
+    final public static byte ACCEL_OVERLAY = 0x02;
+    final public static byte VELOCITY_OVERLAY = 0x04;
 
+    public static byte VectorOverlayMode = NO_OVERLAY;
 
-    public static int VectorOverlayMode =                                                  FORCE_OVERLAY;
-
+    // Settings
+    final public static float FontSize = 1;
+    public static boolean INFO = false;
+    public static boolean pinned = false;
 }

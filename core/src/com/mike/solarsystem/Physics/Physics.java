@@ -1,6 +1,7 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Physics;
 
-import java.util.Currency;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Planets.Planets;
 
 /**
  * Created by Mike on 3/12/2014.
@@ -58,6 +59,10 @@ public class Physics {
             newVelocityX = currentVelocityX * Math.sqrt(newTime/currentTime);
             newVelocityY = currentVelocityY * Math.sqrt(newTime/currentTime);
             Planets.getPlanet(i).setLinearVelocity((float) newVelocityX,(float) newVelocityY);
+
+//            // Rotation TODO: This is current too fast
+//            float rotationalVelocity = Planets.getPlanet(i).getAngularVelocity();
+//            Planets.getPlanet(i).setAngularVelocity((float) (rotationalVelocity*newTime/currentTime));
         }
     }
 }

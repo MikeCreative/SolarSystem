@@ -1,6 +1,8 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Utility;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Planets.Planets;
 
 /**
  * Created by Mike on 14/12/2014.

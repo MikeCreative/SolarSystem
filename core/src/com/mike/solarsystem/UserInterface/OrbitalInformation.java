@@ -1,7 +1,10 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.UserInterface;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Physics.GravitationalForce;
+import com.mike.solarsystem.Planets.Planets;
 
 /**
  * Created by Mike on 5/12/2014.

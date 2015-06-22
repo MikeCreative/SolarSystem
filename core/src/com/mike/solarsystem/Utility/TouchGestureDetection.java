@@ -1,4 +1,4 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Utility;
 
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.UserInterface.UserInterface;
 
 /**
  * Created by USER on 7/12/2014.

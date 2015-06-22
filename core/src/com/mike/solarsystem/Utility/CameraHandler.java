@@ -1,7 +1,9 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Utility;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Planets.Planets;
 
 /**
  * Created by USER on 7/12/2014.

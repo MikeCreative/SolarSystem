@@ -3,7 +3,6 @@ package com.mike.solarsystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,12 +15,16 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mike.solarsystem.Physics.PhysicsOverlay;
+import com.mike.solarsystem.Planets.Planets;
+import com.mike.solarsystem.UserInterface.InfoWindow;
+import com.mike.solarsystem.UserInterface.OrbitalInformation;
+import com.mike.solarsystem.UserInterface.UserInterface;
+import com.mike.solarsystem.Utility.CameraHandler;
+import com.mike.solarsystem.Utility.TouchGestureDetection;
+import com.mike.solarsystem.Utility.changePlanetaryMode;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
-
-import static com.mike.solarsystem.Globals.*;
-import static com.mike.solarsystem.Physics.planetUpdate;
+import static com.mike.solarsystem.Physics.Physics.planetUpdate;
 
 /**
  * Created by Mike on 2/12/2014.
@@ -69,7 +72,7 @@ public class Play implements Screen {
             if(body.getUserData() instanceof Sprite){
                 Sprite sprite = (Sprite) body.getUserData();
                 sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
-//                sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+                sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
                 sprite.draw(batch);
             }
 
@@ -82,7 +85,9 @@ public class Play implements Screen {
         // UI Elements
         UserInterface.updateUI();
         InfoWindow.UpdateInformation();
-        CameraHandler.CameraHandler(camera);
+        if (!Globals.INFO) {
+            CameraHandler.CameraHandler(camera);
+        }
 
         fpsLogger.log();
 //        rayHandler.setCombinedMatrix(camera.combined);
@@ -99,6 +104,10 @@ public class Play implements Screen {
 
     @Override
     public void show() {
+        // Choose Font Size
+        System.out.println("Pixel Density " + Gdx.graphics.getDensity());
+
+
         fpsLogger = new FPSLogger();
 
         world = new World(new Vector2(), true);

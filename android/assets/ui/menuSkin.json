@@ -15,7 +15,8 @@
         "black": { "font": "black", "fontColor": "black" }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-        "default": { "up": "button.up" , "down": "button.down", "font": "white", "fontColor": "black", "pressedOffsetX": 1, "pressedOffsetY": -1 }
+        "default": { "up": "button.up" , "down": "button.down", "font": "white", "fontColor": "black", "pressedOffsetX": 1, "pressedOffsetY": -1 },
+        "information": { "up": "button.up" , "down": "button.down", "font": "white", "fontColor": "black", "pressedOffsetX": 1, "pressedOffsetY": -1 }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle":{
         "default": {"font": white, "fontColorUnselected": white, "fontColorSelected": black, "selection": "default.selection"}

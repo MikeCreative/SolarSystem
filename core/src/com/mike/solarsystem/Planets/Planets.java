@@ -1,4 +1,4 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Planets;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Physics.GravitationalForce;
 
 import static com.mike.solarsystem.Globals.*;
 
@@ -62,6 +64,7 @@ public class Planets extends InputAdapter {
             System.out.println("Velocity " + velocity);
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity);
         }
+        planet[NUMBER_OF_PLANETS].setAngularVelocity(0.5f);
 
         NUMBER_OF_PLANETS++;    // New Planet
     }
@@ -100,6 +103,7 @@ public class Planets extends InputAdapter {
 
             planet[NUMBER_OF_PLANETS].setLinearVelocity(0, (float) velocity + MotherPlanet.getLinearVelocity().y);
         }
+//        planet[NUMBER_OF_PLANETS].setAngularVelocity(5);
         NUMBER_OF_MOONS++;
         NUMBER_OF_PLANETS++;    // New Planet
     }

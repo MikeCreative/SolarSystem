@@ -1,10 +1,10 @@
-package com.mike.solarsystem;
+package com.mike.solarsystem.Physics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
-import jdk.nashorn.internal.objects.Global;
+import com.mike.solarsystem.Globals;
+import com.mike.solarsystem.Planets.Planets;
 
 /**
  * Created by Mike on 21/12/2014.
@@ -24,21 +24,17 @@ public class PhysicsOverlay {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
-
-        if (Globals.VectorOverlayMode == Globals.NO_OVERLAY){
-            // do nothing
-        } else if(Globals.VectorOverlayMode == Globals.FORCE_OVERLAY){
-            createForceOverlay(x, y, i);
-        } else if (Globals.VectorOverlayMode == Globals.ACCEL_OVERLAY){
-            createAccelOverlay(x, y, i);
-        } else if (Globals.VectorOverlayMode == Globals.VELOCITY_OVERLAY){
-            createVelocityOverlay(x, y, i);
-        } else if (Globals.VectorOverlayMode == (Globals.FORCE_OVERLAY + Globals.ACCEL_OVERLAY)){
-            createAccelOverlay(x, y, i);
+        if ((Globals.VectorOverlayMode & (1)) != 0){
             createForceOverlay(x, y, i);
         }
-        shapeRenderer.end();
+        if ((Globals.VectorOverlayMode & (1 << 1)) != 0){
+            createAccelOverlay(x, y, i);
+        }
+        if ((Globals.VectorOverlayMode & (1 << 2)) != 0){
+            createVelocityOverlay(x, y, i);
+        }
 
+        shapeRenderer.end();
     }
 
     public static void createForceOverlay(float x, float y, int i){
@@ -62,19 +58,19 @@ public class PhysicsOverlay {
         if ((x - orbitbodyx) <= 0) {
             rotation = (float) Math.PI + rotation;
         }
-        float acceleration = (float) GravitationalForce.computePlanetAccelerationVector(Planets.getPlanet(i).getMass(), distance, Planets.getPlanet(i).getLinearVelocity());
+        float acceleration = (float) GravitationalForce.computePlanetAccelerationVector(Planets.getPlanet(i).getMass(), distance, Planets.getPlanet(i).getLinearVelocity())*500;
         float accelx = (float) (acceleration * Math.cos(rotation));
         float accely = (float) (acceleration * Math.sin(rotation));
 
 
-        // TODO: Fix dependancy on Velocity /Math.sqrt(Globals.Time) etc
-//        System.out.println("Acceleration " + accelx*1000000 + " " + accely*1000000 + " Rotation " + rotation);
+
+//        System.out.println("Acceleration " + accelx + " " + accely + " Rotation " + rotation);
         // Total
-        shapeRenderer.line(x, y, x + accelx*10000000,  y + accely*10000000, Color.RED, Color.RED);
+        shapeRenderer.line(x, y, x + accelx*100000,  y + accely*100000, Color.RED, Color.RED);
         // x Component
-        shapeRenderer.line(x, y, x + accelx*10000000, y, Color.RED, Color.RED);
+        shapeRenderer.line(x, y, x + accelx*100000, y, Color.RED, Color.RED);
         // y Component
-        shapeRenderer.line(x, y, x, y + accely*10000000, Color.RED, Color.RED);
+        shapeRenderer.line(x, y, x, y + accely*100000, Color.RED, Color.RED);
 
     }
 
